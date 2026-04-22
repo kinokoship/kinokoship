@@ -395,14 +395,12 @@
   </button>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
-  // Firebase SDK
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, serverTimestamp, orderBy, query } 
-    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { 
+    getFirestore, collection, addDoc, getDocs, serverTimestamp, orderBy, query 
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // 你的 Firebase 設定
   const firebaseConfig = {
     apiKey: "AIzaSyCw6zXEvjKexTlDXUTyEfSRNG7PDzD8A7A",
     authDomain: "kinokoship-comments.firebaseapp.com",
@@ -412,11 +410,9 @@
     appId: "1:556541783627:web:83092c9e51d5d4af1fa7ce"
   };
 
-  // 初始化 Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // 載入留言
   async function loadMessages() {
     const list = document.getElementById("messageList");
     list.innerHTML = "載入中...";
@@ -425,8 +421,8 @@
     const querySnapshot = await getDocs(q);
 
     list.innerHTML = "";
-    querySnapshot.forEach((doc) => {
-      const msg = doc.data();
+    querySnapshot.forEach((docItem) => {
+      const msg = docItem.data();
       const time = msg.time?.toDate().toLocaleString() || "未知時間";
 
       list.innerHTML += `
@@ -438,7 +434,6 @@
     });
   }
 
-  // 新增留言
   async function addMessage() {
     const input = document.getElementById("messageInput");
     const text = input.value.trim();
@@ -453,12 +448,12 @@
     loadMessages();
   }
 
-  // 初始載入
-  loadMessages();
-window.addMessage = addMessage;
+  // ⭐⭐ 這一行一定要放在 addMessage 定義之後 ⭐⭐
+  window.addMessage = addMessage;
 
+  loadMessages();
 </script>
-<!-- ====== 雲端留言板結束 ====== -->
+
 
 </body>
 </html>
